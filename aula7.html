@@ -525,7 +525,7 @@ function startPresentation(){
     const slide=document.querySelector('.slide[data-slide="2"]'),rules=slide?.querySelector('.bullets'),note=slide?.querySelector('.small.muted');
     if(!rules||!note)return;
     originalRules??={rules:rules.innerHTML,note:note.textContent};
-    rules.innerHTML=enabled?'<li>Tentativa: <strong>1 ponto</strong>.</li><li>Resposta correta: <strong>+1 ponto</strong>.</li><li>Primeiro acerto: <strong>+1 ponto</strong>, quando a ordem é confirmada.</li><li>Correções não duplicam os pontos.</li>':originalRules.rules;
+    rules.innerHTML=enabled?'<li>Tentativa: <strong>1 ponto</strong>.</li><li>Resposta correta: <strong>+1 ponto</strong>.</li><li>Primeiro acerto: <strong>+1 ponto</strong>, quando a ordem é confirmada.</li><li>Tirar uma dúvida da matéria: <strong>+1 ponto</strong>, até 3 na aula.</li><li>Correções não duplicam os pontos.</li>':originalRules.rules;
     note.textContent=enabled?'Assistente local ativo. Os pontos são formativos, provisórios e podem ser revistos pelo professor.':originalRules.note;
   }
   $$('[data-figure]').forEach(Geo.mount);
