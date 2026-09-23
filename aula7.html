@@ -82,6 +82,10 @@
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 @media print{#reading-appendix{display:block;padding:10px}#reading-appendix article{break-before:page}#reading-appendix h2{font-size:25px}#reading-appendix p,#reading-appendix li{font-size:13px}}
 @media print{@page{size:A4 landscape;margin:10mm}body{background:white;font-size:12px}#viewport,#stage{position:static!important;transform:none!important;width:auto!important;height:auto!important;overflow:visible!important;padding:0!important}.slide,.consult .slide{display:flex!important;position:relative!important;inset:auto!important;min-height:0!important;height:auto!important;width:100%!important;max-width:none!important;padding:10px!important;border:0!important;border-radius:0!important;margin:0!important;break-after:page;break-inside:avoid;overflow:visible!important}.slide-head{margin-bottom:12px}.slide h2{font-size:26px}.slide-body{min-height:0!important;gap:9px}.card{padding:13px;box-shadow:none}.card p{font-size:14px}.diagram{max-height:240px}.cover h1{font-size:50px}.cover .cover-grid{min-height:0!important}.cover .intro{font-size:18px}.equation{font-size:21px}.equation.hero{font-size:25px}.question,.question.large{font-size:21px}.step{font-size:14px;min-height:0;padding:6px}.step[hidden]{display:block!important;visibility:visible!important}.cols{gap:12px}.controls,.solution-actions,#toolbar,#progress,dialog,#toast,.control-page,.decor,.no-print{display:none!important}.slide-foot{margin-top:12px}.value b{font-size:22px}.mini-table{font-size:15px}.mini-table td{padding:7px}.consult .cols.three{grid-template-columns:repeat(3,1fr)}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+#live-chart-button{position:fixed;right:20px;bottom:88px;z-index:60;background:#355844;color:#fff;border-radius:30px;box-shadow:0 4px 18px #20382b30;padding:12px 20px}#live-chart-dialog{width:min(1100px,94vw)}#live-chart-plot svg{width:100%;min-width:500px;display:block}#live-chart-plot{overflow:auto}#live-chart-legend{display:flex;flex-wrap:wrap;gap:8px;max-height:180px;overflow:auto;margin-top:12px}#live-chart-legend button{font-size:13px;padding:8px 12px}#live-chart-legend button[aria-pressed=false]{opacity:.4}@media print{#live-chart-button,#live-chart-dialog{display:none!important}}
+
+#reserve-button{position:fixed;right:20px;bottom:144px;z-index:60;border-radius:30px;background:#fffaf0;color:#355844;box-shadow:0 4px 18px #20382b20;padding:12px 20px}#reserve-dialog{width:min(1100px,94vw)}.reserve-controls{display:flex;align-items:center;gap:18px;flex-wrap:wrap}#reserve-list{display:flex;gap:8px;flex-wrap:wrap;max-height:140px;overflow:auto;margin:16px 0}#reserve-list button{font-size:13px;padding:8px 12px}#reserve-list button[aria-pressed=true]{background:#355844;color:white}#reserve-question{padding:22px;background:#f6f5ef;border-radius:18px}#reserve-question .question{font-size:clamp(18px,2vw,27px);line-height:1.55}@media print{#reserve-button,#reserve-dialog{display:none!important}}
 </style>
 </head>
 <body>
@@ -395,11 +399,210 @@ const Content = (() => {
   add('Três perguntas para qualquer problema.','Fechamento',
     '<div class="cols three">'+card('01 · Correspondência','<p>Quais lados e ângulos combinam?</p>','blue')+card('02 · Hipótese','<p>O que permite usar semelhança ou Tales?</p>','green')+card('03 · Proporção','<p>Mantive a mesma ordem nas razões?</p>','orange')+'</div><div class="cols grow">'+card('Para continuar','<p>Pratique com três questões de retomada e confira as soluções depois.</p><button class="primary" data-supplement="homework">Abrir tarefa e questões de reserva</button><p class="small">No chat: uma dúvida ou uma ideia que ficou clara.</p>')+card('Na próxima aula…','<p>A altura à hipotenusa forma triângulos semelhantes.</p>'+eq('Semelhança → relações métricas')+'<p class="small">Essa será uma ferramenta para compreender Pitágoras.</p>','green')+'</div>',
     'Retome um objetivo que teve mais dificuldade. A tarefa é autoral; não atribuir páginas à apostila ainda não consultada. Exporte o registro e confira pendências.');
+  const reserve=[
+  {
+    "id": "R01",
+    "level": "Aquecimento",
+    "title": "Razão na mesma ordem",
+    "minutes": 2,
+    "prompt": "Em dois triângulos semelhantes, um lado de 3 cm corresponde a um de 5 cm. Um lado de 9 cm do primeiro corresponde a quantos centímetros no segundo?",
+    "solution": [
+      "O fator do primeiro para o segundo é 5/3.",
+      "x = 9 × 5/3 = 15 cm."
+    ],
+    "expectedAnswer": "15 cm; razão 5/3"
+  },
+  {
+    "id": "R02",
+    "level": "Aquecimento",
+    "title": "Ampliação fracionária",
+    "minutes": 2,
+    "prompt": "Um retângulo de 6 cm por 8 cm é ampliado sem deformação. O lado de 6 cm passa a medir 9 cm. Qual é o fator de ampliação e quanto mede o outro lado?",
+    "solution": [
+      "k = 9/6 = 1,5.",
+      "O outro lado mede 8 × 1,5 = 12 cm."
+    ],
+    "expectedAnswer": "k=1,5; 12 cm"
+  },
+  {
+    "id": "R03",
+    "level": "Aquecimento",
+    "title": "Redução de imagem",
+    "minutes": 2,
+    "prompt": "Uma imagem mede 1500 pixels de largura e 900 pixels de altura. Sua largura é reduzida para 500 pixels, preservando a forma. Qual será a altura?",
+    "solution": [
+      "k = 500/1500 = 1/3.",
+      "A altura será 900/3 = 300 pixels."
+    ],
+    "expectedAnswer": "300 pixels"
+  },
+  {
+    "id": "R04",
+    "level": "Aquecimento",
+    "title": "Quem corresponde a quem?",
+    "minutes": 3,
+    "prompt": "ABC e PQR são semelhantes, com A↔Q, B↔R e C↔P. CA=8 cm, PQ=12 cm e BC=10 cm. Qual lado corresponde a BC e quanto ele mede?",
+    "solution": [
+      "B↔R e C↔P: BC corresponde a RP.",
+      "CA corresponde a PQ: k = 12/8 = 1,5.",
+      "RP = 10 × 1,5 = 15 cm."
+    ],
+    "expectedAnswer": "RP ou PR; 15 cm"
+  },
+  {
+    "id": "R05",
+    "level": "Aquecimento",
+    "title": "Encontre o erro",
+    "minutes": 3,
+    "prompt": "Em triângulos semelhantes, 3 cm correspondem a 5 cm e 6 cm correspondem a x. Um aluno escreveu 3/5 = x/6. A proporção está correta? Corrija e determine x.",
+    "solution": [
+      "Não. A primeira razão é primeiro/segundo, mas a segunda inverteu a ordem.",
+      "Use 3/5 = 6/x. Então 3x = 30 e x = 10 cm."
+    ],
+    "expectedAnswer": "não; 3/5=6/x; x=10 cm"
+  },
+  {
+    "id": "R06",
+    "level": "Consolidação",
+    "title": "Um ângulo basta?",
+    "minutes": 3,
+    "prompt": "O primeiro triângulo tem ângulos de 50° e 60°. O segundo tem ângulos de 50° e 80°. Eles são semelhantes? Justifique.",
+    "solution": [
+      "Os terceiros ângulos são 70° e 50°, respectivamente.",
+      "Não: os conjuntos 50°, 60°, 70° e 50°, 50°, 80° são diferentes. Um único ângulo comum não basta."
+    ],
+    "expectedAnswer": "não; ângulos não correspondem"
+  },
+  {
+    "id": "R07",
+    "level": "Consolidação",
+    "title": "Três lados proporcionais",
+    "minutes": 3,
+    "prompt": "Dois triângulos têm lados 6, 8 e 10 cm e 9, 12 e 15 cm. Eles são semelhantes? Qual critério e qual fator do primeiro para o segundo?",
+    "solution": [
+      "9/6 = 12/8 = 15/10 = 1,5.",
+      "Sim, pelo critério LLL; k = 1,5."
+    ],
+    "expectedAnswer": "sim; LLL; k=1,5"
+  },
+  {
+    "id": "R08",
+    "level": "Consolidação",
+    "title": "A posição do ângulo",
+    "minutes": 3,
+    "prompt": "Um triângulo tem dois lados de 4 e 6 cm e ângulo de 40° entre eles. Outro tem lados de 8 e 12 cm e ângulo de 40° entre eles. São semelhantes? O que muda se não soubermos que o ângulo está entre esses lados?",
+    "solution": [
+      "8/4 = 12/6 = 2 e o ângulo compreendido é igual: sim, LAL.",
+      "Sem a informação de que o ângulo é o compreendido, esses dados não garantem o critério LAL. Não conclua que são diferentes: a conclusão é que faltam dados."
+    ],
+    "expectedAnswer": "sim; LAL; sem ângulo compreendido não há garantia"
+  },
+  {
+    "id": "R09",
+    "level": "Consolidação",
+    "title": "Parte e total em Tales",
+    "minutes": 4,
+    "prompt": "Em ABC, D está no segmento AB, E está no segmento AC e DE é paralelo a BC. AD=3 cm, DB=2 cm e AE=4,5 cm. Calcule AC e EC.",
+    "solution": [
+      "AB = 3 + 2 = 5 cm.",
+      "AD/AB = AE/AC: 3/5 = 4,5/AC. Logo AC = 7,5 cm.",
+      "EC = AC − AE = 7,5 − 4,5 = 3 cm."
+    ],
+    "expectedAnswer": "AC=7,5 cm; EC=3 cm"
+  },
+  {
+    "id": "R10",
+    "level": "Consolidação",
+    "title": "Três paralelas",
+    "minutes": 3,
+    "prompt": "Três retas paralelas cortam duas transversais nos pontos A, B, C e D, E, F, nessa ordem. AB=4 cm, BC=6 cm e DE=10 cm. Quanto mede EF?",
+    "solution": [
+      "Segmentos correspondentes: AB↔DE e BC↔EF.",
+      "4/6 = 10/EF. Portanto 4 × EF = 60 e EF = 15 cm."
+    ],
+    "expectedAnswer": "15 cm"
+  },
+  {
+    "id": "R11",
+    "level": "Aplicação",
+    "title": "A altura da árvore",
+    "minutes": 4,
+    "prompt": "No mesmo instante, em chão horizontal, uma pessoa de 1,6 m tem sombra de 2 m. Uma árvore vertical tem sombra de 15 m. Admitindo pessoa vertical e raios solares paralelos, qual é a altura da árvore? Por que podemos usar semelhança?",
+    "solution": [
+      "Os triângulos têm um ângulo reto e o mesmo ângulo dos raios com o solo: AA.",
+      "H/15 = 1,6/2. Logo H = 12 m."
+    ],
+    "expectedAnswer": "12 m; AA"
+  },
+  {
+    "id": "R12",
+    "level": "Aplicação",
+    "title": "Cuidado com as unidades",
+    "minutes": 4,
+    "prompt": "No mesmo instante e em chão horizontal, um bastão vertical de 120 cm projeta sombra de 80 cm. A sombra de uma árvore vertical mede 6 m. Com raios solares paralelos, qual é a altura da árvore?",
+    "solution": [
+      "Converta 120 cm = 1,2 m e 80 cm = 0,8 m.",
+      "H/6 = 1,2/0,8 = 1,5. Portanto H = 9 m."
+    ],
+    "expectedAnswer": "9 m"
+  },
+  {
+    "id": "R13",
+    "level": "Desafio",
+    "title": "Perímetro e área",
+    "minutes": 4,
+    "prompt": "Dois triângulos são semelhantes. O perímetro do primeiro mede 18 cm e o do segundo, 27 cm. A área do primeiro é 20 cm². Qual é a área do segundo?",
+    "solution": [
+      "A razão dos perímetros é igual à dos lados: k = 27/18 = 1,5.",
+      "A razão das áreas é k² = 2,25.",
+      "A segunda área mede 20 × 2,25 = 45 cm²."
+    ],
+    "expectedAnswer": "45 cm²"
+  },
+  {
+    "id": "R14",
+    "level": "Desafio",
+    "title": "O caminho inverso da área",
+    "minutes": 4,
+    "prompt": "As áreas de dois triângulos semelhantes são 36 cm² e 81 cm². Um lado do menor mede 8 cm. Quanto mede o lado correspondente do maior?",
+    "solution": [
+      "A razão das áreas é 81/36 = 9/4.",
+      "A razão dos lados é a raiz positiva: k = 3/2 = 1,5.",
+      "O lado procurado mede 8 × 1,5 = 12 cm."
+    ],
+    "expectedAnswer": "12 cm"
+  },
+  {
+    "id": "R15",
+    "level": "Desafio",
+    "title": "Uma incógnita em Tales",
+    "minutes": 4,
+    "prompt": "Em ABC, D pertence ao segmento AB, E pertence ao segmento AC e DE é paralelo a BC. AD=x, DB=4 cm, AE=6 cm e EC=3 cm. Determine AD e AB.",
+    "solution": [
+      "Pela proporção entre as partes, AD/DB = AE/EC: x/4 = 6/3.",
+      "x = 8 cm, portanto AD = 8 cm.",
+      "AB = AD + DB = 8 + 4 = 12 cm."
+    ],
+    "expectedAnswer": "AD=8 cm; AB=12 cm"
+  },
+  {
+    "id": "R16",
+    "level": "Desafio",
+    "title": "Quando o modelo não vale",
+    "minutes": 3,
+    "prompt": "Às 9h, um bastão projeta uma sombra. Às 15h, medimos a sombra de um prédio. Podemos usar diretamente a razão entre essas sombras para calcular a altura do prédio? Explique qual informação falta.",
+    "solution": [
+      "Não podemos garantir. A posição do Sol pode ter mudado e os raios podem fazer ângulos diferentes com o chão.",
+      "É preciso comparar medidas sob a mesma inclinação solar, além das hipóteses de chão horizontal e objetos verticais. Medir no mesmo instante é uma maneira de assegurar isso."
+    ],
+    "expectedAnswer": "não há garantia; falta a mesma inclinação dos raios solares"
+  }
+];
   const supplements={
     proof:{title:'Por que Tales vale no triângulo?',body:'<div class="cols">'+fig('parallel-static','data-areas="true"')+'<div><p>D está em AB, E em AC e DE ∥ BC. [XYZ] significa a área de XYZ.</p><ol><li>[BDE] = [CDE]: mesma base DE e alturas iguais até a paralela BC.</li><li>[ADE]/[BDE] = AD/DB: mesma altura a partir de E.</li><li>[ADE]/[CDE] = AE/EC: mesma altura a partir de D.</li><li>Logo AD/DB = AE/EC.</li></ol>'+eq(fraction('AD','AB')+' = '+fraction('AE','AC'))+'</div></div><p>A passagem para os totais usa AB=AD+DB e AC=AE+EC. Se AD/DB=AE/EC=t, então AD/AB=t/(t+1)=AE/AC.</p><h3>Do triângulo ao feixe de paralelas</h3><p>Considere três paralelas r, s, t, cortadas em A, B, C e D, E, F. Por A, trace uma reta paralela a DF; ela encontra s em G e t em H. No triângulo ACH, BG ∥ CH, logo AB/BC=AG/GH. Os quadriláteros ADEG e GEFH são paralelogramos; por isso AG=DE e GH=EF. Segue AB/BC=DE/EF. A construção supõe transversais não paralelas; se forem paralelas, os segmentos correspondentes são iguais diretamente pelos paralelogramos.</p><p class="small muted">Esta prova usa áreas e paralelismo, sem recorrer à semelhança para provar Tales.</p>'},
     homework:{title:'Para praticar e conferir',body:'<h3>1. Três lados</h3><p>Triângulos de lados 5, 7, 8 e 10, 14, 16 são semelhantes?</p>'+steps(['10/5 = 14/7 = 16/8 = 2. <strong>Sim, LLL; k = 2.</strong>'])+'<h3>2. Parte e total</h3><p>Em ABC, D ∈ AB, E ∈ AC e DE ∥ BC. AD=4, DB=2 e AE=6. Determine AC e EC.</p>'+steps(['AB=4+2=6. Pela proporção 4/6=6/AC, temos <strong>AC=9</strong>.','EC=AC−AE=9−6=<strong>3</strong>.'])+'<h3>3. Sempre?</h3><p>Dois triângulos isósceles são sempre semelhantes? Justifique.</p>'+steps(['Não. Um pode ter 70°, 70°, 40° e outro 50°, 50°, 80°. Seus ângulos não coincidem.'])+'<h3>Questões de reserva</h3><ul><li>Dois equiláteros são sempre semelhantes? Sim, AA: todos os ângulos são 60°.</li><li>Congruentes são semelhantes? Sim, k=1.</li><li>Razão dos perímetros igual a 5: qual é a razão das áreas? 25.</li><li>Um ângulo igual basta? Não: dados insuficientes.</li></ul>'}
   };
-  return {slides,supplements,steps,card,cols,chip,chat,fraction,eq,fig};
+  return {slides,supplements,reserve,steps,card,cols,chip,chat,fraction,eq,fig};
 })();
 
 function makeBus(onMessage){
@@ -416,10 +619,10 @@ function makeBus(onMessage){
     const {type,payload}=e.data;
     if(type==='extension-ready'){window.matmovExtensionReady=true;onMessage('control-ready',{});}
     else if(type==='extension-error')toast(payload?.message||'Falha na extensão.');
-    else if(['public','hide-public','control-ready','live-mode'].includes(type))onMessage(type,payload);
+    else if(['public','hide-public','control-ready','live-mode','live-chart'].includes(type))onMessage(type,payload);
   });
   window.addEventListener('message',e=>{if(e.origin!==location.origin)return;if(!peers.has(e.source)&&e.source!==window.opener)return;receive(e.data);});
-  return {send(type,payload){const m={channel:'matmov-aula7-v1',id:LessonCore.uid(),client,type,payload};if(channel)channel.postMessage(m);for(const w of peers)try{if(!w.closed)w.postMessage(m,location.origin==='null'?'*':location.origin);}catch{}if(['hello','slide','reveal','open'].includes(type))window.postMessage({channel:'matmov-extension-v1',direction:'page-to-extension',type,payload},'*');},add(w){if(w)peers.add(w);},close(){channel?.close();}};
+  return {send(type,payload){const m={channel:'matmov-aula7-v1',id:LessonCore.uid(),client,type,payload};if(channel)channel.postMessage(m);for(const w of peers)try{if(!w.closed)w.postMessage(m,location.origin==='null'?'*':location.origin);}catch{}if(['hello','slide','reveal','open','chart'].includes(type))window.postMessage({channel:'matmov-extension-v1',direction:'page-to-extension',type,payload},'*');},add(w){if(w)peers.add(w);},close(){channel?.close();}};
 }
 function startControl(){
   document.title='Controle do professor · Aula 07 | MatMov';
@@ -505,18 +708,72 @@ function startPresentation(){
     if(type==='public')showPublic(data);
     if(type==='hide-public')$('#public-dialog').close();
     if(type==='live-mode')setLocalRules(data?.enabled===true);
+    if(type==='live-chart')renderLiveChart(data);
   });
   $('#app').innerHTML='<div id="viewport"><main id="stage">'+Content.slides.map((s,i)=>'<section class="slide '+(i===0?'cover ':'')+(i===current?'active':'')+'" data-slide="'+i+'" aria-label="'+(i+1)+'. '+esc(s.title)+'"><div class="decor" aria-hidden="true"></div>'+(i===0?'':'<header class="slide-head"><div class="head-bar"></div><div><div class="eyebrow">'+esc(s.block)+'</div><h2>'+s.title+'</h2></div></header>')+'<div class="slide-body">'+s.body+'</div><footer class="slide-foot"><span class="tagline">Geometria em campo · uma medida revela outra</span><span class="footer-end"><span class="foot-page">'+String(i+1).padStart(2,'0')+'</span>'+logo+'</span></footer></section>').join('')+'</main></div>'+
     '<nav id="toolbar" aria-label="Navegação da aula"><button id="prev" aria-label="Tela anterior" title="←">←</button><span class="nav-number" id="nav-number"></span><button id="next" aria-label="Próxima tela" title="→">→</button><span class="divider"></span><button id="index-button" title="M">Índice</button><button id="consult-button" title="C">Consulta</button><button id="full-button" title="F" aria-label="Alternar tela cheia">⛶</button><button id="teacher-button">Professor ↗</button></nav><div id="progress"></div>'+
     '<dialog id="index-dialog" class="modal"><div class="modal-head"><h2>Roteiro da aula</h2><button data-close>Fechar</button></div><div class="index-grid">'+Content.slides.map((s,i)=>'<button data-go="'+i+'"><span>'+String(i+1).padStart(2,'0')+' · '+esc(s.block)+'</span>'+esc(s.title)+'</button>').join('')+'</div><p class="keyboard-help">← → navegar · M índice · C consulta · F tela cheia · Home / End primeira / última tela · Esc fechar</p><div class="buttons"><button data-supplement="proof">Demonstração de Tales</button> <button data-supplement="homework">Tarefa e reservas</button> <button id="print-button">Imprimir com soluções</button></div></dialog>'+
     '<dialog id="supplement-dialog" class="modal supplement"><div class="modal-head"><h2 id="supplement-title"></h2><button data-close>Voltar à aula</button></div><div id="supplement-body"></div></dialog>'+
     '<dialog id="public-dialog" class="modal"><div class="modal-head"><h2>Participação da turma</h2><button data-close>Voltar à aula</button></div><div id="public-body"></div></dialog>'+
+    '<button id="reserve-button">+ Questões extras</button><dialog id="reserve-dialog" class="modal"><div class="modal-head"><h2>Questões extras</h2><button data-close>Voltar à aula</button></div><div class="reserve-controls"><label>Nível <select id="reserve-level"><option value="">Todos</option><option>Aquecimento</option><option>Consolidação</option><option>Aplicação</option><option>Desafio</option></select></label><span class="small muted">Escolha conforme o tempo e as dúvidas da turma.</span></div><div id="reserve-list"></div><article id="reserve-question"></article></dialog>'+
+    '<button id="live-chart-button" title="Ver participação acumulada">↗ Participação</button><dialog id="live-chart-dialog" class="modal"><div class="modal-head"><h2>Participação acumulada</h2><button data-close>Voltar à aula</button></div><p id="live-chart-status" class="small muted"></p><p class="small">Pontos provisórios · intervalos de 10 minutos · rótulos anônimos. Clique na legenda para ocultar uma linha.</p><div id="live-chart-plot"></div><div id="live-chart-legend"></div></dialog>'+
     '<section id="reading-appendix"><h2>Material de consulta</h2>'+Object.values(Content.supplements).map(s=>'<article class="supplement"><h2>'+s.title+'</h2>'+s.body+'</article>').join('')+'<article><h2>Os três cartões de Q5</h2><p>Cartão 1: dois pares de ângulos 40° e 60° → AA.</p><p>Cartão 2: lados 3, 4, 5 e 6, 8, 10 → LLL, k=2.</p><p>Cartão 3: lados 4 e 6, lados 6 e 9, ambos com 50° entre eles → LAL, k=1,5.</p></article></section>';
+  let chartTimer=null,chartTimeout=null,chartData=null;
+  const chartHidden=new Set();
+  function requestLiveChart(){
+    if(!$('#live-chart-dialog').open)return;
+    if(!window.matmovExtensionReady){$('#live-chart-status').textContent='Para este gráfico, use o Chrome com a extensão MatMov e o assistente local conectados. A aula continua disponível no modo manual.';return;}
+    bus.send('chart',{});
+    clearTimeout(chartTimeout);chartTimeout=setTimeout(()=>{$('#live-chart-status').textContent='Sem resposta. Atualize a extensão e confira o pareamento do assistente local.';},7000);
+  }
+  function renderLiveChart(data){
+    if(!$('#live-chart-dialog').open)return;
+    clearTimeout(chartTimeout);
+    if(data?.error){$('#live-chart-status').textContent=data.error;return;}
+    if(!data||!Array.isArray(data.series)||data.series.length>500||!Array.isArray(data.ticks)||data.ticks.length>145||!data.ticks.every(Number.isFinite)||!data.series.every(r=>typeof r.label==='string'&&Array.isArray(r.values)&&r.values.length===data.ticks.length&&r.values.every(v=>Number.isFinite(v)&&v>=0)))return;
+    chartData=data;
+    $('#live-chart-status').textContent='Atualizado às '+new Date(data.updatedAt).toLocaleTimeString('pt-BR')+' · '+data.pending+' pendências · '+data.series.length+' alunos. O último intervalo está em andamento.';
+    if(!data.series.length){$('#live-chart-plot').textContent='Aguardando participantes sincronizados.';$('#live-chart-legend').innerHTML='';return;}
+    const max=Math.max(3,...data.series.filter(r=>!chartHidden.has(r.label)).flatMap(r=>r.values)),left=55,bottom=320,width=920,height=370;
+    const x=i=>left+i*(width-left-25)/Math.max(1,data.ticks.length-1),y=v=>bottom-v*(bottom-20)/max,color=i=>'hsl('+((i*137.508)%360).toFixed(1)+' 55% 38%)';
+    let svg='<svg viewBox="0 0 '+width+' '+height+'" role="img" aria-label="Pontuação acumulada por aluno"><title>Pontuação acumulada por aluno</title>';
+    for(let v=0;v<=max;v+=Math.max(1,Math.ceil(max/5)))svg+='<path d="M'+left+' '+y(v)+'H'+(width-25)+'" stroke="#d8dfd2"/><text x="42" y="'+(y(v)+5)+'" text-anchor="end" font-size="14">'+v+'</text>';
+    data.ticks.forEach((t,i)=>{if(i%Math.max(1,Math.ceil(data.ticks.length/12))===0||i===data.ticks.length-1)svg+='<text x="'+x(i)+'" y="348" text-anchor="middle" font-size="13">'+t+' min</text>';});
+    data.series.forEach((r,i)=>{if(!chartHidden.has(r.label))svg+='<polyline fill="none" stroke="'+color(i)+'" stroke-width="2.5" points="'+r.values.map((v,j)=>x(j)+','+y(v)).join(' ')+'"><title>'+esc(r.label)+' · '+r.total+' pontos</title></polyline>';});
+    $('#live-chart-plot').innerHTML=svg+'</svg>';
+    $('#live-chart-legend').innerHTML=data.series.map((r,i)=>'<button data-chart-line="'+i+'" aria-pressed="'+!chartHidden.has(r.label)+'" style="border-left:6px solid '+color(i)+'">'+esc(r.label)+' · '+r.total+'</button>').join('');
+    $('#live-chart-legend').querySelectorAll('button').forEach(b=>b.onclick=()=>{const label=data.series[Number(b.dataset.chartLine)].label;chartHidden.has(label)?chartHidden.delete(label):chartHidden.add(label);renderLiveChart(chartData);});
+  }
+  $('#live-chart-button').onclick=()=>{
+    $('#live-chart-dialog').showModal();$('#live-chart-status').textContent='Carregando gráfico…';requestLiveChart();clearInterval(chartTimer);chartTimer=setInterval(requestLiveChart,10000);
+  };
+  $('#live-chart-dialog').addEventListener('close',()=>{clearInterval(chartTimer);clearTimeout(chartTimeout);});
+  let extraId=null;
+  function extraPayload(){
+    if(!$('#reserve-dialog').open||!extraId)return {extraQuestion:null,extraRevealed:false};
+    return {extraQuestion:extraId,extraRevealed:!$('#reserve-question .step[hidden]')};
+  }
+  function selectExtra(id){
+    const q=Content.reserve.find(q=>q.id===id);if(!q)return;
+    extraId=id;
+    $('#reserve-question').innerHTML='<span class="chip">'+esc(q.id+' · '+q.level+' · '+q.minutes+' min')+'</span><h3>'+esc(q.title)+'</h3><p class="question">'+esc(q.prompt)+'</p><p class="small muted">Responda no chat e conte como pensou. Não é necessário usar um formato específico.</p>'+Content.steps(q.solution.map(esc));
+    $$('#reserve-list button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.extra===id)));
+    bus.send('slide',slidePayload());
+  }
+  function listExtras(){
+    const level=$('#reserve-level').value,items=Content.reserve.filter(q=>!level||q.level===level);
+    $('#reserve-list').innerHTML=items.map(q=>'<button data-extra="'+q.id+'">'+esc(q.id+' · '+q.title)+'</button>').join('');
+    $$('#reserve-list button').forEach(b=>b.onclick=()=>selectExtra(b.dataset.extra));
+    selectExtra(items.some(q=>q.id===extraId)?extraId:items[0].id);
+  }
+  $('#reserve-button').onclick=()=>{$('#reserve-dialog').showModal();listExtras();};
+  $('#reserve-level').onchange=listExtras;
+  $('#reserve-dialog').addEventListener('close',()=>bus.send('slide',slidePayload()));
   function slidePayload(){
-    const source=document.querySelector('.slide[data-slide="'+current+'"]'),clone=source?.cloneNode(true);
+    const source=$('#reserve-dialog').open?$('#reserve-question'):document.querySelector('.slide[data-slide="'+current+'"]'),clone=source?.cloneNode(true);
     clone?.querySelectorAll('[hidden],button,.slide-foot').forEach(el=>el.remove());
     const controls=source?[...source.querySelectorAll('input,select')].map(el=>({label:el.getAttribute('aria-label')||el.id,value:el.type==='checkbox'?el.checked:el.value})):[];
-    return {index:current,cardIndex:current===15?currentCase:null,visibleContext:JSON.stringify({text:clone?.textContent.replace(/\s+/g,' ').trim()||'',controls}).slice(0,20000)};
+    return {...extraPayload(),index:current,cardIndex:current===15?currentCase:null,visibleContext:JSON.stringify({text:clone?.textContent.replace(/\s+/g,' ').trim()||'',controls}).slice(0,20000)};
   }
   let contextTimer;
   document.addEventListener('input',()=>{clearTimeout(contextTimer);contextTimer=setTimeout(()=>bus.send('slide',slidePayload()),250);});
@@ -589,6 +846,7 @@ function startPresentation(){
     if(button.matches('[data-go]')){$('#index-dialog').close();go(+button.dataset.go);}
     if(button.matches('[data-close]'))button.closest('dialog').close();
     if(button.matches('[data-supplement]'))openSupplement(button.dataset.supplement);
+    if(button.closest('#reserve-question')&&button.matches('[data-reveal],[data-hide]'))bus.send('slide',slidePayload());
     if(button.matches('[data-case]')){renderCase(+button.dataset.case);bus.send('slide',slidePayload());}
   });
   $('#prev').onclick=()=>go(current-1);$('#next').onclick=()=>go(current+1);

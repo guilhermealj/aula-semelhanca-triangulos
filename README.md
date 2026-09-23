@@ -9,3 +9,5 @@ Aula interativa MatMov sobre razão, proporção, semelhança de triângulos e T
 O botão Professor abre o controle de participação. Compartilhe somente a guia da aula.
 
 As fontes incorporadas são acompanhadas pelas respectivas licenças OFL.
+
+Botões fixos **Questões extras** (16 exercícios com resolução progressiva) e **Participação** (gráfico com o assistente local conectado). O banco funciona sem extensão; o gráfico depende da extensão e do serviço no computador do professor.
